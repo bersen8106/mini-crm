@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PermissionEnum;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -18,7 +19,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)
-        ->middleware(['role:' . RoleEnum::ADMIN->value]);
+        ->middleware('can:' . PermissionEnum::MANAGE_USERS->value);
     Route::resource('clients', ClientController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('tasks', TaskController::class);
